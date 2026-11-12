@@ -1,4 +1,6 @@
 import Link from "next/link"
+import AppSidebarTrigger from "./app-sidebar-trigger"
+import LogoutButton from "./logout-button"
 import SignedIn from "./signed-in"
 import SignedOut from "./signed-out"
 import { Button } from "./ui/button"
@@ -6,15 +8,11 @@ import { Button } from "./ui/button"
 const Navbar = () => {
   return (
     <nav className="flex h-12 items-center justify-between bg-background px-4">
-      <Link className="font-bold" href={"/"}>
-        Talaria Links
-      </Link>
+      <AppSidebarTrigger />
 
-      <div className="flex items-center gap-4">
+      <div className="ml-auto flex items-center gap-4">
         <SignedIn>
-          <Link className="underline" href={"/dashboard"}>
-            Ir a dashboard
-          </Link>
+          <LogoutButton />
         </SignedIn>
 
         <SignedOut>

@@ -25,7 +25,12 @@ const PublicLinkCard = ({ link }: PublicLinkCardProps) => {
         <span className="font-mono text-sm opacity-70">
           {formatAge(link.createdAt)}
         </span>
-        <h3 className="font-mono font-semibold">{link.title ?? domain}</h3>
+        <h3
+          className="truncate font-mono font-semibold"
+          title={link.title ?? domain}
+        >
+          {link.title ?? domain}
+        </h3>
         <p className="truncate text-sm">
           <a
             href={link.shortUrl}

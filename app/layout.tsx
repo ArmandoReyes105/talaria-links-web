@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { AuthProvider } from "@/providers/auth-provider"
 import Navbar from "@/components/navbar"
+import AppSidebar from "@/components/app-sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
 
@@ -35,8 +37,13 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <TooltipProvider>
-              <Navbar />
-              {children}
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>
+                  <Navbar />
+                  {children}
+                </SidebarInset>
+              </SidebarProvider>
               <Toaster />
             </TooltipProvider>
           </AuthProvider>

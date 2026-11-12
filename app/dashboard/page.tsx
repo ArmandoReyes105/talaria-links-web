@@ -17,7 +17,7 @@ const DashboardPage = () => {
   if (isLoading || !isAuthenticated) return <Loading />
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-4 pt-4">
+    <div className="mx-auto flex w-full max-w-7xl flex-col justify-center gap-4 p-4">
       <div>
         <h1 className="font-mono text-xl font-bold">Mis Enlaces</h1>
         <span className="text-sm text-muted-foreground">
