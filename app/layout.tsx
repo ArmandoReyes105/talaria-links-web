@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { AuthProvider } from "@/providers/auth-provider"
 import Navbar from "@/components/navbar"
 import { Toaster } from "@/components/ui/toast"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -33,9 +34,11 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <AuthProvider>
-            <Navbar />
-            {children}
-            <Toaster />
+            <TooltipProvider>
+              <Navbar />
+              {children}
+              <Toaster />
+            </TooltipProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
