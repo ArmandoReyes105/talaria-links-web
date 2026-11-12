@@ -5,8 +5,10 @@ import { Button } from "./ui/button"
 
 const Navbar = () => {
   return (
-    <nav className="flex h-12 items-center justify-between bg-secondary px-4">
-      <span className="font-bold">Talaria Links</span>
+    <nav className="flex h-12 items-center justify-between bg-background px-4">
+      <Link className="font-bold" href={"/"}>
+        Talaria Links
+      </Link>
 
       <div className="flex items-center gap-4">
         <SignedIn>

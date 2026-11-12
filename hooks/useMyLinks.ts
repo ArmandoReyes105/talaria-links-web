@@ -1,5 +1,5 @@
 import { linkService } from "@/services/link-service"
-import { LinkListResponse, LinkVisibility } from "@/types/link.types"
+import { LinkListResponse, LinkVisibility, UpdateShortUrlRequest } from "@/types/link.types"
 import { useCallback, useEffect, useState } from "react"
 
 const PAGE_SIZE = 10
@@ -52,6 +52,11 @@ export function useMyLinks() {
     else setReloadKey((k) => k + 1)
   }, [data, page])
 
+  const editLink = useCallback(async (id:number, request: UpdateShortUrlRequest) => {
+    await linkService.updateLink(id, request)
+    setReloadKey((k) => k + 1)
+  }, [])
+
   const refetch = useCallback(() => setReloadKey((k) => k + 1), [])
 
   return {
@@ -65,6 +70,7 @@ export function useMyLinks() {
     setPage,
     changeVisibility,
     deleteLink,
+    editLink,
     refetch,
   }
 }

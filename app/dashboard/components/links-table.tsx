@@ -1,10 +1,12 @@
+import CopyButton from "@/components/copy-button"
 import { Button } from "@/components/ui/button"
 import { ShortUrlResponse } from "@/types/link.types"
-import { Trash2 } from "lucide-react"
+import { Pencil, Trash2 } from "lucide-react"
 
 interface LinksTableProps {
   links: ShortUrlResponse[]
   onDelete: (link: ShortUrlResponse) => void
+  onEdit: (link: ShortUrlResponse) => void
 }
 
 const dateFormatter = new Intl.DateTimeFormat("es", {
@@ -13,7 +15,7 @@ const dateFormatter = new Intl.DateTimeFormat("es", {
   year: "numeric",
 })
 
-const LinksTable = ({ links, onDelete }: LinksTableProps) => {
+const LinksTable = ({ links, onDelete, onEdit }: LinksTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-170 border-collapse text-sm">
@@ -73,6 +75,15 @@ const LinksTable = ({ links, onDelete }: LinksTableProps) => {
                 {dateFormatter.format(new Date(link.createdAt))}
               </td>
               <td className="px-2 py-1.5 text-right">
+                <CopyButton value={link.shortUrl} />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onEdit(link)}
+                >
+                  <Pencil />
+                </Button>
                 <Button
                   type="button"
                   variant="ghost"

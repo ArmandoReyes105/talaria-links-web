@@ -10,6 +10,7 @@ import { LinkVisibility, ShortUrlResponse } from "@/types/link.types"
 import { useState } from "react"
 import { toast } from "@/components/ui/toast"
 import DeleteLinkDialog from "./delete-dialog"
+import EditLinkDialog from "./edit-link-dialog"
 
 const FILTERS: { value: LinkVisibility; label: string }[] = [
   { value: "All", label: "Todos" },
@@ -30,11 +31,13 @@ const MyLinks = () => {
     isLoading,
     deleteLink,
     refetch,
+    editLink,
   } = useMyLinks()
 
   const [linkToDelete, setLinkToDelete] = useState<ShortUrlResponse | null>(
     null
   )
+  const [linkToEdit, setLinkToEdit] = useState<ShortUrlResponse | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleConfirmDelete = async () => {
@@ -86,7 +89,11 @@ const MyLinks = () => {
         aria-busy={isLoading}
         className={isLoading ? "opacity-60 transition-opacity" : ""}
       >
-        <LinksTable links={links} onDelete={setLinkToDelete} />
+        <LinksTable
+          links={links}
+          onDelete={setLinkToDelete}
+          onEdit={setLinkToEdit}
+        />
       </div>
     )
   }
@@ -156,6 +163,13 @@ const MyLinks = () => {
         isDeleting={isDeleting}
         setLinkToDelete={setLinkToDelete}
         handleConfirmDelete={handleConfirmDelete}
+      />
+
+      <EditLinkDialog
+        key={linkToEdit?.id ?? "closed"}
+        link={linkToEdit}
+        onClose={() => setLinkToEdit(null)}
+        onSave={editLink}
       />
     </div>
   )
