@@ -1,10 +1,10 @@
 "use client"
 
 import { useAuth } from "@/providers/auth-provider"
-import CreateShortUrlForm from "./components/create-short-url-form"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Loading from "@/components/loading"
+import MyLinks from "./components/my-links"
 
 const DashboardPage = () => {
   const { isLoading, isAuthenticated } = useAuth()
@@ -17,10 +17,14 @@ const DashboardPage = () => {
   if (isLoading || !isAuthenticated) return <Loading />
 
   return (
-    <div className="mx-auto max-w-7xl pt-4">
-      <h1>Mis Enlaces</h1>
-      <span>Crea, modifica y elimina tus enlaces cortos</span>
-      <CreateShortUrlForm />
+    <div className="mx-auto flex max-w-7xl flex-col gap-4 pt-4">
+      <div>
+        <h1 className="font-mono text-xl font-bold">Mis Enlaces</h1>
+        <span className="text-sm text-muted-foreground">
+          Crea, modifica y elimina tus enlaces cortos
+        </span>
+      </div>
+      <MyLinks />
     </div>
   )
 }

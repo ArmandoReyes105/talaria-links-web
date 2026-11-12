@@ -13,10 +13,14 @@ import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/toast"
 import { linkService } from "@/services/link-service"
-import { CreateShortUrlRequest } from "@/types/link.types"
+import { CreateShortUrlRequest, ShortUrlResponse } from "@/types/link.types"
 import { useState } from "react"
 
-const CreateShortUrlForm = () => {
+interface CreateShortUrlFormProps {
+  onCreated?: (link: ShortUrlResponse) => void
+}
+
+const CreateShortUrlForm = ({ onCreated }: CreateShortUrlFormProps) => {
   const [url, setUrl] = useState<string>("")
   const [title, setTitle] = useState<string>("")
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -42,6 +46,8 @@ const CreateShortUrlForm = () => {
         type: "success",
         description: `Enlace creado correctamente ${result.shortUrl}`,
       })
+
+      onCreated?.(result)
     } catch {
       toast.add({
         type: "error",

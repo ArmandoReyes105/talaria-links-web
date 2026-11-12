@@ -1,7 +1,10 @@
 import { apiClient } from "@/lib/api/client"
-import { CreateShortUrlRequest, ShortUrlResponse } from "@/types/link.types"
+import { CreateShortUrlRequest, LinkListResponse, LinksParams, ShortUrlResponse } from "@/types/link.types"
 
 export const linkService = {
-    createShortLink: async (data: CreateShortUrlRequest) => 
+    createShortLink: (data: CreateShortUrlRequest) => 
         apiClient.post<ShortUrlResponse>("/api/link", data),
+
+    getUserLinks: (params?: LinksParams) => 
+        apiClient.get<LinkListResponse>("/api/link/mine", {params: {...params}}), 
 }
