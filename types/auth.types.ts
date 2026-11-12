@@ -1,3 +1,5 @@
+export type Role = "Admin" | "User"
+
 export interface RegisterRequest {
     username: string;
     email: string;
@@ -8,7 +10,7 @@ export interface User {
     id: string;
     email: string;
     username: string;
-    role: "Admin" | "User";
+    role: Role;
 }
 
 export interface LoginRequest {

@@ -1,5 +1,6 @@
 "use client"
 
+import Loading from "@/components/loading"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -21,7 +22,7 @@ function getLoginErrorMessage(error: unknown): string {
     if (error.status === 429)
       return "Haz realizado demasiados intentos, vuelve a intentarlo en un minuto."
   }
-  return "Something went wrong. Please try again."
+  return "Ocurrió un error al comunicarse con el servidor, por favor intentelo más tarde."
 }
 
 const LoginPage = () => {
@@ -43,6 +44,7 @@ const LoginPage = () => {
     setIsSubmitting(true)
     try {
       await login({ email, password })
+      router.push("/dashboard")
     } catch (err) {
       setError(getLoginErrorMessage(err))
     } finally {
@@ -51,11 +53,7 @@ const LoginPage = () => {
   }
 
   if (isLoading || isAuthenticated) {
-    return (
-      <div className="flex min-h-svh items-center justify-center text-sm text-muted-foreground">
-        Cargando...
-      </div>
-    )
+    return <Loading />
   }
 
   return (
