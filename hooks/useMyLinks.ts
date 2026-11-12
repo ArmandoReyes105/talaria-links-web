@@ -44,6 +44,14 @@ export function useMyLinks() {
     setPage(1)
   }, [])
 
+  const deleteLink = useCallback(async (id: number) => {
+    await linkService.deleteLink(id)
+    
+    const wasLastItemOnPage = data?.items.length === 1 && page > 1
+    if (wasLastItemOnPage) setPage((p) => p - 1)
+    else setReloadKey((k) => k + 1)
+  }, [data, page])
+
   const refetch = useCallback(() => setReloadKey((k) => k + 1), [])
 
   return {
@@ -56,6 +64,7 @@ export function useMyLinks() {
     error,
     setPage,
     changeVisibility,
+    deleteLink,
     refetch,
   }
 }

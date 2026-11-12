@@ -6,7 +6,10 @@ import CreateShortUrlForm from "./create-short-url-form"
 import LinksTable from "./links-table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { LinkVisibility } from "@/types/link.types"
+import { LinkVisibility, ShortUrlResponse } from "@/types/link.types"
+import { useState } from "react"
+import { toast } from "@/components/ui/toast"
+import DeleteLinkDialog from "./delete-dialog"
 
 const FILTERS: { value: LinkVisibility; label: string }[] = [
   { value: "All", label: "Todos" },
@@ -25,8 +28,35 @@ const MyLinks = () => {
     changeVisibility,
     error,
     isLoading,
+    deleteLink,
     refetch,
   } = useMyLinks()
+
+  const [linkToDelete, setLinkToDelete] = useState<ShortUrlResponse | null>(
+    null
+  )
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleConfirmDelete = async () => {
+    if (!linkToDelete) return
+
+    setIsDeleting(true)
+    try {
+      await deleteLink(linkToDelete.id)
+      toast.add({
+        type: "success",
+        description: "Enlace eliminado correctamente.",
+      })
+      setLinkToDelete(null)
+    } catch {
+      toast.add({
+        type: "error",
+        description: "No se pudo eliminar el enlace, inténtelo de nuevo.",
+      })
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   const handleCreated = () => {
     setPage(1)
@@ -56,7 +86,7 @@ const MyLinks = () => {
         aria-busy={isLoading}
         className={isLoading ? "opacity-60 transition-opacity" : ""}
       >
-        <LinksTable links={links} />
+        <LinksTable links={links} onDelete={setLinkToDelete} />
       </div>
     )
   }
@@ -120,6 +150,13 @@ const MyLinks = () => {
           )}
         </CardContent>
       </Card>
+
+      <DeleteLinkDialog
+        linkToDelete={linkToDelete}
+        isDeleting={isDeleting}
+        setLinkToDelete={setLinkToDelete}
+        handleConfirmDelete={handleConfirmDelete}
+      />
     </div>
   )
 }

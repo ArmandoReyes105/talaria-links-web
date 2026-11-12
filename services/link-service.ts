@@ -7,4 +7,7 @@ export const linkService = {
 
     getUserLinks: (params?: LinksParams) => 
         apiClient.get<LinkListResponse>("/api/link/mine", {params: {...params}}), 
+
+    deleteLink: (id: number) => 
+        apiClient.delete<void>(`/api/link/${id}`),
 }
